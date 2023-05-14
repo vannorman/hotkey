@@ -1,6 +1,8 @@
 {% load static %}
+	<link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon.ico" />		
 
 <!doctype html>
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,52 +20,25 @@
 </head>
 <body>
     <canvas id='application'></canvas>
-    <script>
-        // create a playcanvas application
-            const canvas = document.getElementById('application');
-            const app = new pc.Application(canvas);
 
-            // fill the available space at full resolution
-            app.setCanvasFillMode(pc.fillmode_fill_window);
-            app.setCanvasResolution(pc.resolution_auto);
 
-            // ensure canvas is resized when window changes size
-            window.addEventListener('resize', () => app.resizeCanvas());
+<!-- TODO
+    ### "Speak to create the game." Log into website, auth microphone, tell game to create a new script, interface with Chat API to create that script, generate the script file, load it into canvas.
 
-            // create box entity
-            const box = new pc.Entity('cube');
+    # Microphone auth
+    # Speech to text API with voice
+    # Capture voice and send to ChatGPT via API
+    # capture response from API, specifically code snippet for .js file
+    # create the js file on the server
+    # load the js file dynamically in the current user's session
+    # enjoy new thing you created
 
-            box.addComponent('model', {
-                type: 'box'
-            });
-            app.root.addChild(box);
+-->
 
-            // create camera entity
-            const camera = new pc.Entity('camera');
-            camera.addComponent('camera', {
-                clearcolor: new pc.Color(0.1, 0.1, 0.1)
-            });
-            app.root.addChild(camera);
-            camera.setPosition(0, 0, 3);
-
-            // create directional light entity
-            const light = new pc.Entity('light');
-            light.addComponent('light');
-            app.root.addChild(light);
-            light.setEulerAngles(45, 0, 0);
-
-            // rotate the box according to the delta time since the last frame
-            app.on('update', dt => box.rotate(10 * dt, 20 * dt, 30 * dt));
-
-            app.start();
-            $('#application').attr('width','600').attr('height','400') /// ughh wtf
-
-    </script>
 </body>
 </html>
 	<!-- <head>
 		<title> hotkey.tv </title>
-	<link rel="icon" type="image/png" sizes="16x16" href="static/img/favicon_z.png" />		
 	<meta name="google-site-verification" content="KPrCTIkFg3RCIWPoYvQO3QBnFcEqKflrEQI_6ztrwzE" />
 	{% block styles %}
 		<link rel='stylesheet' href="static/css/home.css"|add:version|safe type='text/css'>
