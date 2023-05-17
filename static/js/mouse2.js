@@ -18,17 +18,17 @@ Mouse.attributes.add('blueMaterial', {
 // initialize code called once per entity
 Mouse.prototype.initialize = function() {
     console.log("MOUSE Init");
-    this.pos = new pc.Vec2();
+    this.pos = new pc.Vec3();
     // Disabling the context menu stops the browser displaying a menu when
     // you right-click the page
-//    Game.app.mouse.disableContextMenu();
+    this.app.mouse.disableContextMenu();
     this.cameraEntity = this.app.root.findByName('MainCamera');
 
     // Use the on() method to attach event handlers.
     // The mouse object supports events on move, button down and
     // up, and scroll wheel.
-    Input.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
-    Input.mouse.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
+    this.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+    this.app.mouse.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
 
 
     console.log("mouse bound.");
@@ -37,16 +37,9 @@ Mouse.prototype.initialize = function() {
 Mouse.prototype.onMouseMove = function (event) {
     // Use the camera component's screenToWorld function to convert the
     // position of the mouse into a position in 3D space
-    // var depth = 10;
-    // this.cameraEntity.camera.screenToWorld(event.x, event.y, depth, this.pos);
-    if (this.pos == pc.Vec2.ZERO) {
-        this.pos = new pc.Vec2(event.x,event.y);
-    }
-    this.app.mouse.dx = this.pos.x - event.x;
-    this.app.mouse.dy = this.pos.y - event.y;
-    //console.log("this app mouse dx dy:"+this.app.mouse.dx+","+this.app.mouse.dy);
-//    console.log("cam x:"+event.x+", pos x:"+this.pos.x);
-    this.pos = new pc.Vec2(event.x,event.y);
+    var depth = 10;
+    this.cameraEntity.camera.screenToWorld(event.x, event.y, depth, this.pos);
+    console.log("cam x:"+event.x);
     // Finally update the cube's world-space position
 //    this.entity.setPosition(this.pos);
 };
@@ -55,10 +48,11 @@ Mouse.prototype.onMouseDown = function (event) {
     console.log("eV:"+event);
     this.app.mouse.enablePointerLock()
 
-    // If the left mouse button is pressed, change the cube color to red
+// If the left mouse button is pressed, change the cube color to red
 //    if (event.button === pc.MOUSEBUTTON_LEFT) {
 //        this.entity.render.meshInstances[0].material = this.redMaterial.resource;
 //    }
 
 };
+
 
