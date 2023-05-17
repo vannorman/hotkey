@@ -117,7 +117,7 @@ function example(canvas, deviceType) {
                 });
 
                 // scale it
-                floor.setLocalScale(10, 1, 10);
+                floor.setLocalScale(100, 1, 100);
 
                 // add a rigidbody component so that other objects collide with it
                 floor.addComponent("rigidbody", {
@@ -128,7 +128,7 @@ function example(canvas, deviceType) {
                 // add a collision component
                 floor.addComponent("collision", {
                     type: "box",
-                    halfExtents: new pc.Vec3(5, 0.5, 5),
+                    halfExtents: new pc.Vec3(50, 0.5, 50),
                 });
 
                 // add the floor to the hierarchy
@@ -161,7 +161,7 @@ function example(canvas, deviceType) {
                 Game.mainCamera = camera;
                 camera.addComponent("camera", {
                     clearColor: new pc.Color(0.5, 0.5, 0.8),
-                    farClip: 50,
+                    farClip: 500,
                 });
 
                 // add the camera to the hierarchy
@@ -303,7 +303,13 @@ function example(canvas, deviceType) {
                                     body.isActive() ? red : gray;
                                     }
                         });
+
                 });
+
+
+
+                // END example scripts
+
                 let staticDir = '/static/js/'
                 app.assets.loadFromUrl(staticDir+"thirdPersonController.js",'script',function(err,asset){
                     if (err){ console.log("FAILED to load thirdPersonController.js. err:"+err); }
@@ -343,7 +349,7 @@ function example(canvas, deviceType) {
 
 
                 box.reparent(box2);
-                Game.mainCamera.reparent(pivot);
+                  Game.mainCamera.reparent(pivot);
                 Game.playerController = box2.addComponent('script');
                 Game.playerController.create('thirdPersonController', {
                     attributes : {
@@ -360,10 +366,44 @@ function example(canvas, deviceType) {
                 let rb = box2.addComponent("rigidbody"); // Without options, this defaults to a 'static' body
                 box2.addComponent("collision"); // Without options, this defaults to a 1x1x1 box shape
                 rb.type = pc.BODYTYPE_DYNAMIC;
-         
+                Scenes.cubeScene(app);         
             });
         });
     }
 }
+
+var Scenes = {
+    cubeScene(app)  {
+        for(let i=0;i<25;i++){
+            for(let j=0;j<25;j++){
+                // Create a grid            
+                let box = new pc.Entity("cube");
+                box.addComponent('model', {
+                    type: 'box'
+                });
+                app.root.addChild(box);
+                box.setPosition(new pc.Vec3(i*1.2,j*1.2,-40));
+                console.log("cubes added");
+            }
+        }
+    }
+}
+
+$(document).on("keydown", function (e) {
+    let ee = String.fromCharCode(e.which);
+    //console.log('e:'+ee +", sh:"+e.shiftKey);
+    Input.keyboard.shiftKey = e.shiftKey
+
+    if (ee = 'b'){
+        return;
+        const box = new pc.Entity('cube');
+        box.addComponent('model', {
+            type: 'box'
+        });
+        Game.app.root.addChild(box);
+        box.setPosition(Math.random(),Math.random(),Math.random())
+    }
+    // use e.which
+});
 
 
