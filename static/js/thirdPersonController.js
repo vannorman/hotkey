@@ -8,7 +8,7 @@ ThirdPersonController.attributes.add('lookSpeed', { type: 'number', default: 1, 
 ThirdPersonController.prototype.initialize = function () {
     console.log("INIT 3rd person controller prototype.");
     // Enable the mouse to control the camera rotation
-    Input.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+    Game.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
     
     // Initialize the character's movement direction
     this.direction = new pc.Vec3(); 
@@ -85,16 +85,15 @@ ThirdPersonController.prototype.onMouseMove = function (e) {
     let max = 46;
     this.eulers.x = clamp(this.eulers.x,min,max); 
 
-    return;
     // Rotate the camera based on mouse movement
     if (this.camera ){ // && this.app.mouse.isPointerLocked()) {
         var mouse = this.app.mouse;
         var y = mouse.dy * this.lookSpeed;
-        console.log('mouserot:'+y+","+mouse.dx);
+//        console.log('mouserot:'+y+","+mouse.dx);
         this.entity.rotateLocal(0, mouse.dx, 0);
         this.entity.rotate(y,0,0);
     } else {
         this.camera = Game.mainCamera;
-        console.log("this c:"+this.camera);
+        //console.log("this c:"+this.camera);
     }
 };

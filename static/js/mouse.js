@@ -27,8 +27,8 @@ Mouse.prototype.initialize = function() {
     // Use the on() method to attach event handlers.
     // The mouse object supports events on move, button down and
     // up, and scroll wheel.
-    Input.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
-    Input.mouse.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
+    Game.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+    Game.app.mouse.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
 
 
     console.log("mouse bound.");
@@ -44,7 +44,7 @@ Mouse.prototype.onMouseMove = function (event) {
     }
     this.app.mouse.dx = this.pos.x - event.x;
     this.app.mouse.dy = this.pos.y - event.y;
-    //console.log("this app mouse dx dy:"+this.app.mouse.dx+","+this.app.mouse.dy);
+    // console.log("this app mouse dx dy:"+this.app.mouse.dx+","+this.app.mouse.dy);
 //    console.log("cam x:"+event.x+", pos x:"+this.pos.x);
     this.pos = new pc.Vec2(event.x,event.y);
     // Finally update the cube's world-space position

@@ -1,3 +1,4 @@
+var box2;
 var Input = {
     mouse : null,
     keyboard : {
@@ -45,6 +46,7 @@ function example(canvas, deviceType) {
             const createOptions = new pc.AppOptions();
             createOptions.graphicsDevice = device;
             createOptions.keyboard = new pc.Keyboard(document.body);
+            createOptions.mouse = new pc.Mouse(document.body);
 
             createOptions.componentSystems = [
                 // @ts-ignore
@@ -333,12 +335,15 @@ function example(canvas, deviceType) {
                 });
                 app.root.addChild(box);
                 box.setPosition(new pc.Vec3(4,2,-10));
-                 let box2  = new pc.Entity("cube");
+                box2  = new pc.Entity("cube2");
                 box2.addComponent('model', {
                     type: 'box'
                 });
+                box2.addComponent("render", {
+                    type: "box",
+                    material: gray,
+                });
                 app.root.addChild(box2);
-
                  let pivot = new pc.Entity("pivot");
                  Game.pivot = pivot;
                 box2.addComponent('model', {
@@ -346,18 +351,14 @@ function example(canvas, deviceType) {
                 });
                 app.root.addChild(pivot);
                 pivot.reparent(box2);
+                console.log(box2);
+//                box2.render.meshInstances[0].material = red;
 
 
                 box.reparent(box2);
-                  Game.mainCamera.reparent(pivot);
+                Game.mainCamera.reparent(pivot);
                 Game.playerController = box2.addComponent('script');
                 Game.playerController.create('thirdPersonController', {
-                    attributes : {
-                        camera : Game.mainCamera,
-                        pivot : pivot,
-                        moveSpeed : 4,
-                        turnSpeed : 1.2
-                  }
                  });
         //         Game.playerController.turnSpeed = 1.2;
                 Game.playerController.camera = Game.mainCamera;
@@ -366,6 +367,7 @@ function example(canvas, deviceType) {
                 let rb = box2.addComponent("rigidbody"); // Without options, this defaults to a 'static' body
                 box2.addComponent("collision"); // Without options, this defaults to a 1x1x1 box shape
                 rb.type = pc.BODYTYPE_DYNAMIC;
+                rb.angularFactor = pc.Vec3.ZERO;
                 Scenes.cubeScene(app);         
             });
         });
