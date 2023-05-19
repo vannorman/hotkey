@@ -1,8 +1,20 @@
 import openai
 import re
 # Set up the OpenAI API client
-openai.api_key = "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"
+
+import os
+
+def load_api_key():
+    file_name = 'open-ai-key.txt'  # Replace with the actual file name
+    file_path = os.path.join(settings.BASE_DIR, file_name)
+    
+    if os.path.isfile(file_path):  # Verify if the file exists
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+            openai.api_key = file_content
+    
 def main():
+    load_api_key()
     print("The following prompt will be used:\n\n")
     prompt = """
 Prompt

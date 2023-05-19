@@ -14,3 +14,5 @@ push.sh
 *.DS_Store
 static/admin/
 test1
+open-api-key.txt
+
