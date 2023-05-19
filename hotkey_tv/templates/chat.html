@@ -1,0 +1,29 @@
+{{ chat.response }} 
+<script src="/static/js/jquery-min.js"></script>
+<script> const csrf = "{{ csrf }}" </script>
+<script>
+$(document).ready(function(){
+    $('#load').on('click',function(){
+        ajax.Load();
+    })
+    });
+var ajax ={ 
+    Load(){
+        $.ajax({
+            type: 'POST',
+            url: "load/",
+            headers: {
+                "X-CSRFToken" : csrf
+            },
+            success: function (e) {
+               alert('success'); 
+            },
+            error: function (e) {
+               alert('error'); 
+            }
+        });
+    },
+}
+ 
+</script>
+<button id="load">LOAD</button>

@@ -23,6 +23,7 @@ md = markdown.Markdown()
 #import requests
 
 from hotkey_tv.util import *
+from hotkey_tv.chat import *
 def simple_page(template):
     def handler(request):
         return renderWithNav(request, template)
@@ -58,4 +59,15 @@ def home(request):
         })
     return renderWithNav(request,'home.html', obj)
 
+def chat(request):
+    obj = {}
+    obj['chat'] = { 'response' : 'hello' }
+    return  renderWithNav(request,'chat.html', obj)  
 
+def load(request):
+    if request.method == "POST": #and request.headers.get("contentType": "application/json"):
+        success = False
+        data = {"success":False}
+        return JsonResponse({
+            'success':success,
+            })
