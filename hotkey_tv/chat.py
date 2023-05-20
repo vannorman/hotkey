@@ -24,7 +24,7 @@ blah blah blah
     print(prompt)
     advance(prompt)
 
-def advance(prompt):
+def send_prompt(prompt):
     pattern = r'\d+[ ](?:[A-Za-z0-9.-]+[ ]?)+(?:Avenue|Lane|Road|Boulevard|Drive|Street|Ave|Dr|Rd|Blvd|Ln|St)\.?'
     if re.match(pattern,prompt, re.IGNORECASE):
         print("ADDRESS DETECTED. ENDING SEQUENCE")
@@ -44,9 +44,10 @@ def advance(prompt):
         presence_penalty=0.5
     )
     response = completion.choices[0].text
-    print("Chat says:\n\n:"+response+"\n\n")
-    next_prompt = input("Your Reply: ")
-    advance(next_prompt)
+    return response
+#    print("Chat says:\n\n:"+response+"\n\n")
+#    next_prompt = input("Your Reply: ")
+#    advance(next_prompt)
 
 if __name__ == "__main__":
     main()

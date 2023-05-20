@@ -64,10 +64,14 @@ def chat(request):
     obj['chat'] = { 'response' : 'hello' }
     return  renderWithNav(request,'chat.html', obj)  
 
-def load(request):
+def sendchat(request):
     if request.method == "POST": #and request.headers.get("contentType": "application/json"):
+#        data = json.loads(request.POST.get('data'))
+        message = request.POST.get('message')
         success = False
         data = {"success":False}
+        reply = send_prompt(message)
         return JsonResponse({
             'success':success,
+            'message':reply
             })

@@ -10,7 +10,7 @@ urlpatterns = [
 	url(r'^$', hotkey_tv.views.home),
 	url(r'^address/$', hotkey_tv.views.simple_page('address.html')), 
 	url(r'^chat/?$', hotkey_tv.views.chat),
-	url(r'^load/?$', hotkey_tv.views.load),
+	url(r'^sendchat/?$', hotkey_tv.views.sendchat),
 
 #	url(r'^blog/(.*)$', hotkey_tv.views.blog), 
 
