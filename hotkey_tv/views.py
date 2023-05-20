@@ -68,6 +68,7 @@ def sendchat(request):
     if request.method == "POST": #and request.headers.get("contentType": "application/json"):
 #        data = json.loads(request.POST.get('data'))
         message = request.POST.get('message')
+        print(str(request.POST))
         success = False
         data = {"success":False}
         reply = send_prompt(message)

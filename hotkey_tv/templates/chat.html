@@ -9,11 +9,14 @@ $(document).ready(function(){
     var ajax ={ 
     SendChat(){
         message = $('#chat').val();
+        console.log("Message:"+message);
         $.ajax({
             type: 'POST',
             url: "sendchat/",
             headers: {
                 "X-CSRFToken" : csrf,
+            },
+            data : {
                 "message" : message,
             },
             success: function (e) {
