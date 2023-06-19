@@ -6,9 +6,10 @@ ThirdPersonController.attributes.add('moveSpeed', { type: 'number', default: 4, 
 ThirdPersonController.attributes.add('lookSpeed', { type: 'number', default: 1, title: 'Turn Speed' });
 
 ThirdPersonController.prototype.initialize = function () {
-    console.log("INIT 3rd person controller prototype.");
+    console.log("INIT 3rd person controller prototype");
     // Enable the mouse to control the camera rotation
     Game.app.mouse.on(pc.EVENT_MOUSEMOVE, this.onMouseMove, this);
+    Game.app.mouse.on(pc.EVENT_MOUSEDOWN, this.onMouseDown, this);
     
     // Initialize the character's movement direction
     this.direction = new pc.Vec3(); 
@@ -60,23 +61,13 @@ ThirdPersonController.prototype.update = function (dt) {
         this.entity.rigidbody.applyForce(this.force);
     }
 
-    //console.log("move:"+this.direction);
-
-    // Rotate the character based on mouse movement
-    if (this.camera) {
-        var mouse = Input.mouse;
-        var x = mouse.dx * this.lookSpeed * dt;
-        //console.log("mouse dx:"+mouse.dx);
-        //this.entity.rotate(0, x, 0);
-    } else {
-        //console.log("not move mouse. mouse:"+this.app.mouse+", camera;"+this.camera);
-    }
-
-
 };
+ThirdPersonController.prototype.onMouseDown = function (e) {
+    this.app.mouse.enablePointerLock();
+}
 
 ThirdPersonController.prototype.onMouseMove = function (e) {
-
+    if (pc.Mouse.isPointerLocked() == false) return;
     this.eulers.y -= this.lookSpeed * e.dx;
     this.eulers.x -= this.lookSpeed * e.dy;
     this.eulers.x %= 360;
@@ -84,16 +75,4 @@ ThirdPersonController.prototype.onMouseMove = function (e) {
     let min = -21;
     let max = 46;
     this.eulers.x = clamp(this.eulers.x,min,max); 
-
-    // Rotate the camera based on mouse movement
-    if (this.camera ){ // && this.app.mouse.isPointerLocked()) {
-        var mouse = this.app.mouse;
-        var y = mouse.dy * this.lookSpeed;
-//        console.log('mouserot:'+y+","+mouse.dx);
-        this.entity.rotateLocal(0, mouse.dx, 0);
-        this.entity.rotate(y,0,0);
-    } else {
-        this.camera = Game.mainCamera;
-        //console.log("this c:"+this.camera);
-    }
 };
